@@ -18,8 +18,8 @@ Patch2:		%{name}-fv10k1.patch
 URL:		http://sourceforge.net/projects/emu10k1/
 BuildRequires:	gtk+-devel
 BuildRequires:	m4
-Conflicts:	kernel < 2.4.11
 Conflicts:	alsa-driver
+Conflicts:	kernel < 2.4.11
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_prefix		/usr
@@ -111,22 +111,26 @@ cp %{SOURCE2} %{SOURCE3} .
 
 %build
 %{__make} CC="%{__cc}"
-%{__make} -C dbgemu CC="%{__cc}"
+%{__make} -C dbgemu \
+	CC="%{__cc}"
 #%%{__make} -C fv10k1
-%{__make} -C epache-%{epache_version} CC="%{__cc}"
+%{__make} -C epache-%{epache_version} \
+	CC="%{__cc}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_prefix}/X11R6/bin,%{_datadir}/emu10k1/asm}
 
-%{__make} DESTDIR=$RPM_BUILD_ROOT install
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT
+
 install epache-%{epache_version}/epache $RPM_BUILD_ROOT%{_prefix}/X11R6/bin
 install dbgemu/dbgemu $RPM_BUILD_ROOT%{_bindir}
 mv dbgemu/README dbgemu/README.dbgemu
 install as10k1/effects/*.asm $RPM_BUILD_ROOT%{_datadir}/emu10k1/asm
 install as10k1/effects/*.inc $RPM_BUILD_ROOT%{_datadir}/emu10k1/asm
-gzip -9nf $RPM_BUILD_ROOT%{_datadir}/emu10k1/asm/*
 
+gzip -9nf $RPM_BUILD_ROOT%{_datadir}/emu10k1/asm/*
 gzip -9nf $RPM_BUILD_ROOT%{_datadir}/emu10k1/README
 
 %clean
