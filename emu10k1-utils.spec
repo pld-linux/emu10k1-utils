@@ -9,6 +9,7 @@ Group:		Applications/Sound
 Source0:	http://dl.sourceforge.net/emu10k1/emu-tools-%{version}.tar.gz
 # Source0-md5:	906fc53ad142bb4d3531c941d7878264
 Source1:	http://www.geocities.com/hsokolow2001/linux/epache-%{epache_version}.tgz
+# Source1-md5:	f85a9f71485a4f8667084010e7c18e6f
 Source2:	m2049.pdf
 Source3:	hog63.ps
 Patch0:		%{name}-path.patch
