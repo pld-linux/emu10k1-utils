@@ -14,10 +14,10 @@ Patch0:		%{name}-path.patch
 Patch1:		%{name}-aumix.patch
 Patch2:		%{name}-fv10k1.patch
 URL:		http://sourceforge.net/projects/emu10k1/
+BuildRequires:	gtk+-devel
+BuildRequires:	m4
 Conflicts:	kernel < 2.4.11
 Conflicts:	alsa-driver
-BuildRequires:	m4
-BuildRequires:	gtk+-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_prefix		/usr
@@ -79,7 +79,7 @@ Skrypt ³aduj±cy ³atki. W chwili obecnej nie potrafi zbyt du¿o.
 %package epache
 Summary:	Program for configuring patches for emu10k1 based sound cards
 Summary(pl):	Program konfiguruj±cy ³atki dla kart opartych na emu10k1
-Group:		X11/Applications/Multimedia
+Group:		X11/Applications/Sound
 Requires:	%{name}
 
 %description epache
