@@ -8,8 +8,8 @@ License:	GPL
 Group:		Applications/Sound
 Source0:	http://prdownloads.sourceforge.net/emu10k1/emu-tools-%{version}.tar.gz
 Source1:	http://www.geocities.com/hsokolow2001/linux/epache-%{epache_version}.tgz
-Source2:	ftp://opensource.creative.com/pub/doc/m2049.pdf
-Source3:	ftp://opensource.creative.com/pub/doc/hog63.ps
+Source2:	m2049.pdf
+Source3:	hog63.ps
 Patch0:		%{name}-path.patch
 Patch1:		%{name}-aumix.patch
 Patch2:		%{name}-fv10k1.patch
