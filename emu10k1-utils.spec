@@ -106,7 +106,6 @@ Requires:	%{name}
 %patch2 -p1
 
 cp %{SOURCE2} %{SOURCE3} .
-gzip hog63.ps
 
 %build
 %{__make}
@@ -131,7 +130,6 @@ install as10k1/effects/*.inc $RPM_BUILD_ROOT%{_datadir}/emu10k1/asm/
 gzip -9nf $RPM_BUILD_ROOT%{_datadir}/emu10k1/asm/*
 
 gzip -9nf $RPM_BUILD_ROOT%{_datadir}/emu10k1/README
-gzip -9nf docs/* epache-%{epache_version}/README dbgemu/README.dbgemu
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -155,7 +153,7 @@ mv -f /etc/modules.conf.new /etc/modules.conf
 %attr(750,root,root) %{_bindir}/load.sh
 %attr(750,root,root) %{_bindir}/unload.sh
 %attr(750,root,root) %{_bindir}/dbgemu
-%doc docs/CHANGES.gz docs/README.gz docs/README.FAQ.gz dbgemu/*.gz
+%doc docs/CHANGES docs/README docs/README.FAQ dbgemu/README.dbgemu
 %{_mandir}/man1/emu-*
 %dir %{_datadir}/emu10k1
 %{_datadir}/emu10k1/*.bin
@@ -164,8 +162,8 @@ mv -f /etc/modules.conf.new /etc/modules.conf
 %files devel
 %defattr(644,root,root,755)
 %attr(750,root,root) %{_bindir}/as10k1
-%doc docs/dsp.txt.gz docs/manuals.txt.gz docs/multichannel.txt.gz docs/TODO.gz
-%doc hog63.ps.gz m2049.pdf
+%doc docs/dsp.txt docs/manuals.txt docs/multichannel.txt docs/TODO
+%doc hog63.ps m2049.pdf
 %{_mandir}/man1/as10k1*
 %dir %{_datadir}/emu10k1/asm
 %{_datadir}/emu10k1/asm/*
@@ -178,4 +176,4 @@ mv -f /etc/modules.conf.new /etc/modules.conf
 %files epache
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_prefix}/X11R6/bin/epache
-%doc epache-%{epache_version}/README.gz
+%doc epache-%{epache_version}/README
