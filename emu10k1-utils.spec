@@ -118,11 +118,11 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_prefix}/X11R6/bin,%{_datadir}/emu10k1/asm}
 
 %{__make} DESTDIR=$RPM_BUILD_ROOT install
-install epache-%{epache_version}/epache $RPM_BUILD_ROOT%{_prefix}/X11R6/bin/
+install epache-%{epache_version}/epache $RPM_BUILD_ROOT%{_prefix}/X11R6/bin
 install dbgemu/dbgemu $RPM_BUILD_ROOT%{_bindir}
 mv dbgemu/README dbgemu/README.dbgemu
-install as10k1/effects/*.asm $RPM_BUILD_ROOT%{_datadir}/emu10k1/asm/
-install as10k1/effects/*.inc $RPM_BUILD_ROOT%{_datadir}/emu10k1/asm/
+install as10k1/effects/*.asm $RPM_BUILD_ROOT%{_datadir}/emu10k1/asm
+install as10k1/effects/*.inc $RPM_BUILD_ROOT%{_datadir}/emu10k1/asm
 gzip -9nf $RPM_BUILD_ROOT%{_datadir}/emu10k1/asm/*
 
 gzip -9nf $RPM_BUILD_ROOT%{_datadir}/emu10k1/README
@@ -131,13 +131,14 @@ gzip -9nf $RPM_BUILD_ROOT%{_datadir}/emu10k1/README
 rm -rf $RPM_BUILD_ROOT
 
 %post	autoconfig
+umask 027
 grep "post-install emu10k1 /usr/bin/emu-script" /etc/modules.conf > /dev/null
-if [ "$?" -eq "1" ]
-then
+if [ "$?" -eq "1" ]; then
 	echo "post-install emu10k1 /usr/bin/emu-script" >> /etc/modules.conf
 fi
 
 %postun	autoconfig
+umask 027
 grep -v "post-install emu10k1 /usr/bin/emu-script" /etc/modules.conf > /etc/modules.conf.new
 mv -f /etc/modules.conf.new /etc/modules.conf
 
