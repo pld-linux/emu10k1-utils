@@ -108,10 +108,10 @@ Requires:	%{name}
 cp %{SOURCE2} %{SOURCE3} .
 
 %build
-%{__make}
-%{__make} -C dbgemu
-%{__make} -C fv10k1
-%{__make} -C epache-%{epache_version}
+%{__make} CC="%{__cc}"
+%{__make} -C dbgemu CC="%{__cc}"
+#%{__make} -C fv10k1
+%{__make} -C epache-%{epache_version} CC="%{__cc}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -119,12 +119,8 @@ install -d $RPM_BUILD_ROOT{%{_prefix}/X11R6/bin,%{_datadir}/emu10k1/asm}
 
 %{__make} DESTDIR=$RPM_BUILD_ROOT install
 install epache-%{epache_version}/epache $RPM_BUILD_ROOT%{_prefix}/X11R6/bin/
-install fv10k1/load.sh fv10k1/unload.sh fv10k1/fv10k1control.pl dbgemu/dbgemu $RPM_BUILD_ROOT%{_bindir}
-mv fv10k1/README docs/README.fv10k1
+install dbgemu/dbgemu $RPM_BUILD_ROOT%{_bindir}
 mv dbgemu/README dbgemu/README.dbgemu
-install fv10k1/bin/* $RPM_BUILD_ROOT%{_datadir}/emu10k1/
-install fv10k1/*.asm $RPM_BUILD_ROOT%{_datadir}/emu10k1/asm/
-install fv10k1/*.inc $RPM_BUILD_ROOT%{_datadir}/emu10k1/asm/
 install as10k1/effects/*.asm $RPM_BUILD_ROOT%{_datadir}/emu10k1/asm/
 install as10k1/effects/*.inc $RPM_BUILD_ROOT%{_datadir}/emu10k1/asm/
 gzip -9nf $RPM_BUILD_ROOT%{_datadir}/emu10k1/asm/*
@@ -149,9 +145,6 @@ mv -f /etc/modules.conf.new /etc/modules.conf
 %defattr(644,root,root,755)
 %attr(750,root,root) %{_bindir}/emu-config
 %attr(750,root,root) %{_bindir}/emu-dspmgr
-%attr(750,root,root) %{_bindir}/fv10k1control.pl
-%attr(750,root,root) %{_bindir}/load.sh
-%attr(750,root,root) %{_bindir}/unload.sh
 %attr(750,root,root) %{_bindir}/dbgemu
 %doc docs/CHANGES docs/README docs/README.FAQ dbgemu/README.dbgemu
 %{_mandir}/man1/emu-*
