@@ -49,7 +49,7 @@ gotowych, skompilowanych ³atek, które mo¿na za³adowaæ u¿ywaj±c
 emu-dspmgr.
 
 %package devel
-Summary:	emu10k1 programming utils.
+Summary:	emu10k1 programming utils
 Summary(pl):	Narzêdzia do programowania emu10k1
 Group:		Applications/Sound
 
@@ -64,8 +64,8 @@ Pakiet zawiera:
 - ¼ród³a ³atek z g³ównego pakietu
 
 %package autoconfig
-Summary:	emu10k1 autoconfiguration on module load.
-Summary(pl):	Skrypt konfiguruj±cy emu10k1 przy ³adowaniu modu³u.
+Summary:	emu10k1 autoconfiguration on module load
+Summary(pl):	Skrypt konfiguruj±cy emu10k1 przy ³adowaniu modu³u
 Group:		Applications/Sound
 Requires:	%{name} = %{version}
 Requires:	aumix
