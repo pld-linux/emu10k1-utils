@@ -15,14 +15,14 @@ Source3:	hog63.ps
 Patch0:		%{name}-path.patch
 Patch1:		%{name}-aumix.patch
 Patch2:		%{name}-fv10k1.patch
+Patch3:		%{name}-gcc33.patch
 URL:		http://sourceforge.net/projects/emu10k1/
 BuildRequires:	gtk+-devel
+BuildRequires:	libstdc++-devel
 BuildRequires:	m4
 Conflicts:	alsa-driver
 Conflicts:	kernel < 2.4.11
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-%define		_prefix		/usr
 
 %description
 The emu10k1 is really a dsp processor. It does not do any effects on
@@ -106,25 +106,35 @@ Requires:	%{name}
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 cp %{SOURCE2} %{SOURCE3} .
 
 %build
-%{__make} CC="%{__cc}"
-%{__make} -C dbgemu \
-	CC="%{__cc}"
-#%%{__make} -C fv10k1
+%{__make} \
+	CC="%{__cc}" \
+	CFLAGS="%{rpmcflags} -W -Wall"
+
+cd dbgemu
+%{__cc} %{rpmldflags} %{rpmcflags} -Wall -o dbgemu dbgemu.c
+
+cd ../fv10k1
+%{__cxx} %{rpmldflags} %{rpmcflags} -Wall -o calcroom calcroom.C
+%{__make}
+cd ..
+
 %{__make} -C epache-%{epache_version} \
-	CC="%{__cc}"
+	CC="%{__cc}" \
+	CFLAGS="%{rpmcflags} -Wall \$(GTK_CFLAGS)"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_prefix}/X11R6/bin,%{_datadir}/emu10k1/asm}
+install -d $RPM_BUILD_ROOT%{_datadir}/emu10k1/asm
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-install epache-%{epache_version}/epache $RPM_BUILD_ROOT%{_prefix}/X11R6/bin
+install epache-%{epache_version}/epache $RPM_BUILD_ROOT%{_bindir}
 install dbgemu/dbgemu $RPM_BUILD_ROOT%{_bindir}
 mv dbgemu/README dbgemu/README.dbgemu
 install as10k1/effects/*.asm $RPM_BUILD_ROOT%{_datadir}/emu10k1/asm
@@ -151,9 +161,9 @@ mv -f /etc/modules.conf.new /etc/modules.conf
 %files
 %defattr(644,root,root,755)
 %doc docs/CHANGES docs/README docs/README.FAQ dbgemu/README.dbgemu
-%attr(750,root,root) %{_bindir}/emu-config
-%attr(750,root,root) %{_bindir}/emu-dspmgr
-%attr(750,root,root) %{_bindir}/dbgemu
+%attr(754,root,root) %{_bindir}/emu-config
+%attr(754,root,root) %{_bindir}/emu-dspmgr
+%attr(754,root,root) %{_bindir}/dbgemu
 %dir %{_datadir}/emu10k1
 %{_datadir}/emu10k1/*.bin
 %{_datadir}/emu10k1/README.gz
@@ -161,19 +171,17 @@ mv -f /etc/modules.conf.new /etc/modules.conf
 
 %files devel
 %defattr(644,root,root,755)
-%doc docs/dsp.txt docs/manuals.txt docs/multichannel.txt docs/TODO
-%doc hog63.ps m2049.pdf
-%attr(750,root,root) %{_bindir}/as10k1
-%dir %{_datadir}/emu10k1/asm
-%{_datadir}/emu10k1/asm/*
+%doc docs/dsp.txt docs/manuals.txt docs/multichannel.txt docs/TODO hog63.ps m2049.pdf
+%attr(755,root,root) %{_bindir}/as10k1
+%{_datadir}/emu10k1/asm
 %{_mandir}/man1/as10k1*
 
 %files autoconfig
 %defattr(644,root,root,755)
-%attr(750,root,root) %{_bindir}/emu-script
+%attr(754,root,root) %{_bindir}/emu-script
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/emu10k1.conf
 
 %files epache
 %defattr(644,root,root,755)
 %doc epache-%{epache_version}/README
-%attr(755,root,root) %{_prefix}/X11R6/bin/epache
+%attr(755,root,root) %{_bindir}/epache
