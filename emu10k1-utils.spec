@@ -13,7 +13,7 @@ Source3:	ftp://opensource.creative.com/pub/doc/hog63.ps
 Patch0:		%{name}-path.patch
 Patch1:		%{name}-aumix.patch
 Patch2:		%{name}-fv10k1.patch
-URL:		http://sourceforge.net/projects/emu10k1
+URL:		http://sourceforge.net/projects/emu10k1/
 Conflicts:	kernel < 2.4.11
 Conflicts:	alsa-driver
 BuildRequires:	m4
