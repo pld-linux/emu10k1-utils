@@ -3,7 +3,7 @@ Summary:	Utils controlling emu10k1 processor
 Summary(pl):	Narzêdzia kontroluj±ce procesor emu10k1
 Name:		emu10k1-utils
 Version:	0.9.4
-Release:	2
+Release:	3
 License:	GPL
 Group:		Applications/Sound
 Source0:	http://dl.sourceforge.net/emu10k1/emu-tools-%{version}.tar.gz
@@ -150,23 +150,23 @@ mv -f /etc/modules.conf.new /etc/modules.conf
 
 %files
 %defattr(644,root,root,755)
+%doc docs/CHANGES docs/README docs/README.FAQ dbgemu/README.dbgemu
 %attr(750,root,root) %{_bindir}/emu-config
 %attr(750,root,root) %{_bindir}/emu-dspmgr
 %attr(750,root,root) %{_bindir}/dbgemu
-%doc docs/CHANGES docs/README docs/README.FAQ dbgemu/README.dbgemu
-%{_mandir}/man1/emu-*
 %dir %{_datadir}/emu10k1
 %{_datadir}/emu10k1/*.bin
 %{_datadir}/emu10k1/README.gz
+%{_mandir}/man1/emu-*
 
 %files devel
 %defattr(644,root,root,755)
-%attr(750,root,root) %{_bindir}/as10k1
 %doc docs/dsp.txt docs/manuals.txt docs/multichannel.txt docs/TODO
 %doc hog63.ps m2049.pdf
-%{_mandir}/man1/as10k1*
+%attr(750,root,root) %{_bindir}/as10k1
 %dir %{_datadir}/emu10k1/asm
 %{_datadir}/emu10k1/asm/*
+%{_mandir}/man1/as10k1*
 
 %files autoconfig
 %defattr(644,root,root,755)
@@ -175,5 +175,5 @@ mv -f /etc/modules.conf.new /etc/modules.conf
 
 %files epache
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_prefix}/X11R6/bin/epache
 %doc epache-%{epache_version}/README
+%attr(755,root,root) %{_prefix}/X11R6/bin/epache
