@@ -3,11 +3,13 @@ Summary:	Utils controlling emu10k1 processor
 Summary(pl):	Narzêdzia kontroluj±ce procesor emu10k1
 Name:		emu10k1-utils
 Version:	0.9.4
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/Sound
 Source0:	http://prdownloads.sourceforge.net/emu10k1/emu-tools-%{version}.tar.gz
 Source1:	http://www.geocities.com/hsokolow2001/linux/epache-%{epache_version}.tgz
+Source2:	ftp://opensource.creative.com/pub/doc/m2049.pdf
+Source3:	ftp://opensource.creative.com/pub/doc/hog63.ps
 Patch0:		%{name}-path.patch
 Patch1:		%{name}-aumix.patch
 Patch2:		%{name}-fv10k1.patch
@@ -77,7 +79,7 @@ Skrypt ³aduj±cy ³atki. W chwili obecnej nie potrafi zbyt du¿o.
 %package epache
 Summary:	Program for configuring patches for emu10k1 based sound cards
 Summary(pl):	Program konfiguruj±cy ³atki dla kart opartych na emu10k1
-Group:		Applications/Sound
+Group:		X11/Applications/Multimedia
 Requires:	%{name}
 
 %description epache
@@ -89,19 +91,22 @@ Requires:	%{name}
 - you can save sessions and load them later, session is a list of
   patches currenlty loaded with values of controls.
 
-%description epcache -l pl
+%description epache -l pl
 - z pomoc± emu-dspmgra mo¿esz ³atwo ³adowaæ ³aty do karty na dan±
   liniê (³ata musi byæ wygenerowana przez asembler as10k1) oraz
   wyczy¶ciæ z niej kartê,
-- mo¿esz kontrolowaæ 'CONTROL GRPS' za³adowanych ³at,
+- mo¿esz kontrolowaæ rejestry kontrolne za³adowanych ³at,
 - mo¿esz zachowywaæ sesje i ³adowaæ je; sesja jest list± aktualnie
   za³adowanych ³at z warto¶ciami kontrolnymi.
 
 %prep
-%setup -n emu-tools-%{version} -q -a 1
+%setup -n emu-tools-%{version} -q -a1
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+
+cp %{SOURCE2} %{SOURCE3} .
+gzip hog63.ps
 
 %build
 %{__make}
@@ -111,23 +116,22 @@ Requires:	%{name}
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT{%{_prefix}/X11R6/bin,%{_datadir}/emu10k1/asm}
 
 %{__make} DESTDIR=$RPM_BUILD_ROOT install
-install -d $RPM_BUILD_ROOT%{_prefix}/X11R6/bin
-cp epache-%{epache_version}/epache $RPM_BUILD_ROOT%{_prefix}/X11R6/bin/
-cp fv10k1/load.sh fv10k1/unload.sh fv10k1/fv10k1control.pl $RPM_BUILD_ROOT%{_bindir}
+install epache-%{epache_version}/epache $RPM_BUILD_ROOT%{_prefix}/X11R6/bin/
+install fv10k1/load.sh fv10k1/unload.sh fv10k1/fv10k1control.pl dbgemu/dbgemu $RPM_BUILD_ROOT%{_bindir}
 mv fv10k1/README docs/README.fv10k1
-cp fv10k1/bin/* $RPM_BUILD_ROOT%{_datadir}/emu10k1/
-mkdir $RPM_BUILD_ROOT%{_datadir}/emu10k1/asm/
-cp fv10k1/*.asm $RPM_BUILD_ROOT%{_datadir}/emu10k1/asm/
-cp fv10k1/*.inc $RPM_BUILD_ROOT%{_datadir}/emu10k1/asm/
-cp as10k1/effects/*.asm $RPM_BUILD_ROOT%{_datadir}/emu10k1/asm/
-cp -f as10k1/effects/*.inc $RPM_BUILD_ROOT%{_datadir}/emu10k1/asm/
+mv dbgemu/README dbgemu/README.dbgemu
+install fv10k1/bin/* $RPM_BUILD_ROOT%{_datadir}/emu10k1/
+install fv10k1/*.asm $RPM_BUILD_ROOT%{_datadir}/emu10k1/asm/
+install fv10k1/*.inc $RPM_BUILD_ROOT%{_datadir}/emu10k1/asm/
+install as10k1/effects/*.asm $RPM_BUILD_ROOT%{_datadir}/emu10k1/asm/
+install as10k1/effects/*.inc $RPM_BUILD_ROOT%{_datadir}/emu10k1/asm/
 gzip -9nf $RPM_BUILD_ROOT%{_datadir}/emu10k1/asm/*
 
 gzip -9nf $RPM_BUILD_ROOT%{_datadir}/emu10k1/README
-gzip -9nf docs/*
-gzip -9nf epache-%{epache_version}/README
+gzip -9nf docs/* epache-%{epache_version}/README dbgemu/README.dbgemu
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -141,8 +145,7 @@ fi
 
 %postun	autoconfig
 grep -v "post-install emu10k1 /usr/bin/emu-script" /etc/modules.conf > /etc/modules.conf.new
-mv -f /etc/modules.conf /etc/modules.conf.old
-mv /etc/modules.conf.new /etc/modules.conf
+mv -f /etc/modules.conf.new /etc/modules.conf
 
 %files
 %defattr(644,root,root,755)
@@ -151,7 +154,8 @@ mv /etc/modules.conf.new /etc/modules.conf
 %attr(750,root,root) %{_bindir}/fv10k1control.pl
 %attr(750,root,root) %{_bindir}/load.sh
 %attr(750,root,root) %{_bindir}/unload.sh
-%doc docs/CHANGES.gz docs/README.gz docs/README.FAQ.gz
+%attr(750,root,root) %{_bindir}/dbgemu
+%doc docs/CHANGES.gz docs/README.gz docs/README.FAQ.gz dbgemu/*.gz
 %{_mandir}/man1/emu-*
 %dir %{_datadir}/emu10k1
 %{_datadir}/emu10k1/*.bin
@@ -161,6 +165,7 @@ mv /etc/modules.conf.new /etc/modules.conf
 %defattr(644,root,root,755)
 %attr(750,root,root) %{_bindir}/as10k1
 %doc docs/dsp.txt.gz docs/manuals.txt.gz docs/multichannel.txt.gz docs/TODO.gz
+%doc hog63.ps.gz m2049.pdf
 %{_mandir}/man1/as10k1*
 %dir %{_datadir}/emu10k1/asm
 %{_datadir}/emu10k1/asm/*
