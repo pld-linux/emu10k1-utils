@@ -7,6 +7,7 @@ Release:	2
 License:	GPL
 Group:		Applications/Sound
 Source0:	http://dl.sourceforge.net/emu10k1/emu-tools-%{version}.tar.gz
+# Source0-md5:	906fc53ad142bb4d3531c941d7878264
 Source1:	http://www.geocities.com/hsokolow2001/linux/epache-%{epache_version}.tgz
 Source2:	m2049.pdf
 Source3:	hog63.ps
