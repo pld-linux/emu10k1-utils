@@ -1,0 +1,380 @@
+--- emu-tools-0.9.4/as10k1/as10k1.c.orig	Sun Jan 20 03:00:16 2002
++++ emu-tools-0.9.4/as10k1/as10k1.c	Mon Sep  1 11:42:46 2003
+@@ -39,32 +39,32 @@
+ 
+ char version[]="As10k1 assembler version 1.0";
+ 
+-char help[]="
+-Usage: as10k1 [option...] asmfile
+-
+-The as10k1 assembler is for the emu10k1 dsp processor
+-found in Creative Lab's sblive series of sound cards.
+-
+-Author: Daniel Bertrand <d.bertrand@ieee.org>
+-BUGS:   emu10k1-devel mailing list <emu10k1-devel@opensource.creative.com>
+-URLs:   members.home.com/d-bertrand, opensource.creative.com
+-
+-Options:\n
+-     -l [listfile]         Specify a listing file, default is none.
+-     -o [binfile]          Specify an output file, default is based input,
+-                           Substituting .asm fo .bin
+-     -d [dbg_options...]   Turn on debug messages.
+-            s              prints all symbols                
+-            g              prints defined gprs
+-            t              prints tram usage
+-            i              prints instructions
+-
+-     -n                    no gpr declaration check 
+-     -h                    Prints this message  
+-     -v                    Prints version number. 
+-
+-This program is distributed under the GPL.
+-
++char help[]="\n\
++Usage: as10k1 [option...] asmfile\n\
++\n\
++The as10k1 assembler is for the emu10k1 dsp processor\n\
++found in Creative Lab's sblive series of sound cards.\n\
++\n\
++Author: Daniel Bertrand <d.bertrand@ieee.org>\n\
++BUGS:   emu10k1-devel mailing list <emu10k1-devel@opensource.creative.com>\n\
++URLs:   members.home.com/d-bertrand, opensource.creative.com\n\
++\n\
++Options:\n\n\
++     -l [listfile]         Specify a listing file, default is none.\n\
++     -o [binfile]          Specify an output file, default is based input,\n\
++                           Substituting .asm fo .bin\n\
++     -d [dbg_options...]   Turn on debug messages.\n\
++            s              prints all symbols\n\
++            g              prints defined gprs\n\
++            t              prints tram usage\n\
++            i              prints instructions\n\
++\n\
++     -n                    no gpr declaration check\n\
++     -h                    Prints this message\n\
++     -v                    Prints version number.\n\
++\n\
++This program is distributed under the GPL.\n\
++\n\
+ ";
+ 
+ //  cli==Command-Line Interface && !Creative Labs Inc.
+--- emu-tools-0.9.4/mixer/lib/debug.c.orig	Sun Jan 20 03:00:16 2002
++++ emu-tools-0.9.4/mixer/lib/debug.c	Mon Sep  1 11:44:24 2003
+@@ -325,18 +325,18 @@
+ 			k=i;
+ 	}
+ 	printf("\
+-Usage Summary:
+---------
+-Instructions : %d
+-GPRS:          %d (last used is %d)
+-
+-Tram
+- Internal
+-   buffers:    %d
+-   space  :    0x%06x
+- External
+-   buffers:    %d
+-   space  :    0x%06x
++Usage Summary:\n\
++--------\n\
++Instructions : %d\n\
++GPRS:          %d (last used is %d)\n\
++\n\
++Tram\n\
++ Internal\n\
++   buffers:    %d\n\
++   space  :    0x%06x\n\
++ External\n\
++   buffers:    %d\n\
++   space  :    0x%06x\n\
+ ",
+ 	       mgr->code_free_start/2, j,k,
+ 	       mgr->traml_ifree_start,  mgr->tramb_ifree_start,
+--- emu-tools-0.9.4/dbgemu/dbgemu.h.orig	Sun Jan 20 03:00:16 2002
++++ emu-tools-0.9.4/dbgemu/dbgemu.h	Mon Sep  1 11:46:42 2003
+@@ -113,98 +113,98 @@
+ 	"R=log(A), X controls max exponent(2-31), Y controls sign",
+ 	"R=log(A), X controls max exponent(2-31), Y controls sign",
+ 	"INTERP R = A + (X * (Y - A) >> 31); overflow: saturation",
+-	"SKIP R->GPR to store CCR, A -> CCR to use, X-> skip test equation,
++	"SKIP R->GPR to store CCR, A -> CCR to use, X-> skip test equation,\n\
+  Y-> gpr containint number of instructions to skip"  
+ };
+ 
+ 
+ int fd,fd2;
+-char map[]="memory map:
+-
+-GRPS:                  0x100-0x1FF
+-ITRAM Data Buffer:     0x200-0x27F
+-XTRAM Data Buffer:     0x280-0x29F
+-ITRAM Address Buffer:  0x300-0x37F
+-XTRAM Address Buffer:  0x380-0x39F
+-Program Memory:        0x400-0x600
++char map[]="memory map:\n\
++\n\
++GRPS:                  0x100-0x1FF\n\
++ITRAM Data Buffer:     0x200-0x27F\n\
++XTRAM Data Buffer:     0x280-0x29F\n\
++ITRAM Address Buffer:  0x300-0x37F\n\
++XTRAM Address Buffer:  0x380-0x39F\n\
++Program Memory:        0x400-0x600\n\
+ ";
+ 
+-char usage[]="
+-dbgemu [options]
+-
+-All values in hex.
+-
+-   -d  dumps registers, sub-options:
+-
+-        -a <address>     
+-            dumps contents of the AC97 register at the given address
+-
+-        -r <address>
+-            dumps contents of the DSP register at the given address.
+-            valid ranges of register:
+-              CONFIG REGS            0x000-0x063
+-              GRPS:                  0x100-0x1FF
+-              ITRAM Data Buffer:     0x200-0x27F
+-              XTRAM Data Buffer:     0x280-0x29F
+-              ITRAM Address Buffer:  0x300-0x37F
+-              XTRAM Address Buffer:  0x380-0x39F
+-              Program Memory:        0x400-0x600
+-        -f <address>
+-            dumps \"function0\" register space(includes the HCFG register)
+-        
+-
+-   -l  loads values into register, sub-options:
+-
+-        -a <address> <value>
+-             load value into given ac97 register
+-
+-        -c <address> <opcode> <R> <A> 
+-             load formated dsp code
+-        
+-        -r <address> <value>
+-             load value into given dsp register
+-                
+-        -f <address> <value>
+-             load value into given fn0 register
+-
+-   -D  [commands]
+-        If no command is specified, prints current dsp debug state.
+-       Debug mode commands:
+-
+-        step_mode
+-             turns on step mode
+-
+-        step [instruction #]
+-             executes given instruction, if no instruction is specified,
+-             esecutes next instruction
+-
+-        clear_sat
+-             clears the \"saturation occured\" bit.
+-
+-        step_mode_off
+-             resumes normal dsp operation.
+-
+-   -h     Prints this help message.
+-   -v     Prints version number.
+-
+----
+-
+-Examples:
+-
+-To display 10 GPRs starting from 0x100:
+-
+-dbgemu -d r  100 10
+-
+-To load a value of 1 to 0x100:
+-
+-dbgemu -l r 100 1
+-
+-To change an instruction:
+-
+-dbgemu -l c 400 macs 10 30 100 20
+-
+-
+----
++char usage[]="\n\
++dbgemu [options]\n\
++\n\
++All values in hex.\n\
++\n\
++   -d  dumps registers, sub-options:\n\
++\n\
++        -a <address>     \n\
++            dumps contents of the AC97 register at the given address\n\
++\n\
++        -r <address>\n\
++            dumps contents of the DSP register at the given address.\n\
++            valid ranges of register:\n\
++              CONFIG REGS            0x000-0x063\n\
++              GRPS:                  0x100-0x1FF\n\
++              ITRAM Data Buffer:     0x200-0x27F\n\
++              XTRAM Data Buffer:     0x280-0x29F\n\
++              ITRAM Address Buffer:  0x300-0x37F\n\
++              XTRAM Address Buffer:  0x380-0x39F\n\
++              Program Memory:        0x400-0x600\n\
++        -f <address>\n\
++            dumps \"function0\" register space(includes the HCFG register)\n\
++        \n\
++\n\
++   -l  loads values into register, sub-options:\n\
++\n\
++        -a <address> <value>\n\
++             load value into given ac97 register\n\
++\n\
++        -c <address> <opcode> <R> <A> \n\
++             load formated dsp code\n\
++        \n\
++        -r <address> <value>\n\
++             load value into given dsp register\n\
++                \n\
++        -f <address> <value>\n\
++             load value into given fn0 register\n\
++\n\
++   -D  [commands]\n\
++        If no command is specified, prints current dsp debug state.\n\
++       Debug mode commands:\n\
++\n\
++        step_mode\n\
++             turns on step mode\n\
++\n\
++        step [instruction #]\n\
++             executes given instruction, if no instruction is specified,\n\
++             esecutes next instruction\n\
++\n\
++        clear_sat\n\
++             clears the \"saturation occured\" bit.\n\
++\n\
++        step_mode_off\n\
++             resumes normal dsp operation.\n\
++\n\
++   -h     Prints this help message.\n\
++   -v     Prints version number.\n\
++\n\
++---\n\
++\n\
++Examples:\n\
++\n\
++To display 10 GPRs starting from 0x100:\n\
++\n\
++dbgemu -d r  100 10\n\
++\n\
++To load a value of 1 to 0x100:\n\
++\n\
++dbgemu -l r 100 1\n\
++\n\
++To change an instruction:\n\
++\n\
++dbgemu -l c 400 macs 10 30 100 20\n\
++\n\
++\n\
++---\n\
+ ";
+ int foo=0;
+ char version[]="dbgemu, version 0.3";
+--- emu-tools-0.9.4/dbgemu/dbgemu.c.orig	Sun Jan 20 03:00:16 2002
++++ emu-tools-0.9.4/dbgemu/dbgemu.c	Mon Sep  1 11:47:18 2003
+@@ -265,12 +265,12 @@
+ 	step_mode_on=(val&DBG_SINGLE_STEP)>>15 ;
+ 	if(step_mode_on){
+ 		
+-	printf("----------------------------------------------------------------------------
+-|Emu10k1 Status                |  Debug register 0x%08x                  |
+-|----------------------------------------------------------------------------|
+-| single step mode: \e[1;31mON\e[0m	 	  Saturation: %s\e[0m; Last addr: 0x%03x (0x%03x) |
+-| program pointer: 0x%03x (0x%03x)  Condition code: 0x%02x -> %s\e[0m %s\e[0m %s\e[0m %s\e[0m %s\e[0m          |
+- -----------------------------------------------------------------------------
++	printf("----------------------------------------------------------------------------\n\
++|Emu10k1 Status                |  Debug register 0x%08x                  |\n\
++|----------------------------------------------------------------------------|\n\
++| single step mode: \e[1;31mON\e[0m	 	  Saturation: %s\e[0m; Last addr: 0x%03x (0x%03x) |\n\
++| program pointer: 0x%03x (0x%03x)  Condition code: 0x%02x -> %s\e[0m %s\e[0m %s\e[0m %s\e[0m %s\e[0m          |\n\
++ -----------------------------------------------------------------------------\n\
+ ",
+ 	       val,
+ 
+@@ -292,12 +292,12 @@
+ 
+ 	}
+ 	else
+-		printf("-----------------------------------------------------------------------------
+-|Emu10k1 Status                |  Debug register 0x%08x                  |
+-|----------------------------------------------------------------------------|
+-| single step mode: off	          Saturation: %s\e[0m; Last addr: 0x%03x (0x%03x) |
+-|                                                                            |
+- ----------------------------------------------------------------------------
++		printf("-----------------------------------------------------------------------------\n\
++|Emu10k1 Status                |  Debug register 0x%08x                  |\n\
++|----------------------------------------------------------------------------|\n\
++| single step mode: off	          Saturation: %s\e[0m; Last addr: 0x%03x (0x%03x) |\n\
++|                                                                            |\n\
++ ----------------------------------------------------------------------------\n\
+ ", val, ((val&DBG_SATURATION_OCCURED)>>25)?"\e[1;31mYes ":"None",
+ 	       (val&DBG_SATURATION_ADDR)>>16,
+ 		       ((val&DBG_SATURATION_ADDR)>>16)*2+0x400    
+--- emu-tools-0.9.4/epache-0.1.4/emudsp.c.orig	Wed Aug 22 23:04:21 2001
++++ emu-tools-0.9.4/epache-0.1.4/emudsp.c	Mon Sep  1 11:49:24 2003
+@@ -6,24 +6,18 @@
+ 
+ 
+ 
+-char *dsp_in_name[NUM_INPUTS] = { "Pcm L", "Pcm R", "Pcm1 L", "Pcm1 R", "fx4
+-", "fx5", "fx6", "fx7", "fx8",
++char *dsp_in_name[NUM_INPUTS] = { "Pcm L", "Pcm R", "Pcm1 L", "Pcm1 R", "fx4", "fx5", "fx6", "fx7", "fx8",
+         "fx9", "fx10", "fx11", "fx12", "fx13", "fx14", "fx15",
+-        "Analog L", "Analog R", "CD-Spdif L", "CD-Spdif R", "in2l", "in2r", "Opt
+-. Spdif L", "Opt. Spdif R",
++        "Analog L", "Analog R", "CD-Spdif L", "CD-Spdif R", "in2l", "in2r", "Opt. Spdif L", "Opt. Spdif R",
+         "RCA Aux L", "RCA Aux R", "RCA Spdif L", "RCA Spdif R", "Line2/Mic2 L",
+ "Line2/Mic2 R", "in7l", "in7r"
+ };
+ 
+ char *dsp_out_name[NUM_OUTPUTS] =
+-    { "Front L", "Front R", "Digital L", "Digital R", "out2l", "out2r", "Phones
+-L", "Phones R",
+-        "Rear L", "Rear R", "ADC Rec L", "ADC Rec R", "Mic Rec", "out6r", "out7l
+-", "out7r",
+-        "out8l", "out8r", "out9l", "out9r", "out10l", "out10r", "out11l", "out11
+-r",
+-        "out12l", "out12r", "out13l", "out13r", "out14l", "out14r", "out15l", "o
+-ut15r"
++    { "Front L", "Front R", "Digital L", "Digital R", "out2l", "out2r", "Phones L", "Phones R",
++        "Rear L", "Rear R", "ADC Rec L", "ADC Rec R", "Mic Rec", "out6r", "out7l", "out7r",
++        "out8l", "out8r", "out9l", "out9r", "out10l", "out10r", "out11l", "out11r",
++        "out12l", "out12r", "out13l", "out13r", "out14l", "out14r", "out15l", "out15r"
+ };
+ 
+ 
+--- emu-tools-0.9.4/epache-0.1.4/gtk.c.orig	Wed Oct 24 06:49:01 2001
++++ emu-tools-0.9.4/epache-0.1.4/gtk.c	Mon Sep  1 11:52:05 2003
+@@ -204,15 +204,15 @@
+   gtk_window_set_title(&GTK_DIALOG(about)->window,"about");
+   
+ 
+-  text=g_strdup_printf("epache\n
+-		        a simple tool for emu10k1 based sound cards
+-			 \n
+-			 version %s
+-			 licensed under the GNU GPL
+-			 author:
+-			 Hubert Sokolowski  <hsokolow2001@yahoo.com>
+-			 web address:
+-			 http://www.yahoo.com/hsokolow2001/epache",VERSION);
++  text=g_strdup_printf("epache\n"
++		       "a simple tool for emu10k1 based sound cards\n"
++		       "\n"
++		       "version %s\n"
++		       "licensed under the GNU GPL\n"
++		       "author:\n"
++		       "Hubert Sokolowski  <hsokolow2001@yahoo.com>\n"
++		       "web address:\n"
++		       "http://www.yahoo.com/hsokolow2001/epache",VERSION);
+   label = gtk_label_new (text);
+   g_free(text);
+   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (about)->vbox),
