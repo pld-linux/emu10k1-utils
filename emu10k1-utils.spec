@@ -3,7 +3,7 @@ Summary:	Utils controlling emu10k1 processor
 Summary(pl):	Narzêdzia kontroluj±ce procesor emu10k1
 Name:		emu10k1-utils
 Version:	0.9.4
-Release:	3
+Release:	4
 License:	GPL
 Group:		Applications/Sound
 Source0:	http://dl.sourceforge.net/emu10k1/emu-tools-%{version}.tar.gz
