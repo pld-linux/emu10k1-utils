@@ -64,7 +64,7 @@ Package contains:
 - as10k1 - Assembler for the emu10k1 DSP Processor
 - patches sources
 
-%description -l pl devel
+%description devel -l pl
 Pakiet zawiera:
 - as10k1 - asembler dla procesora emu10k1
 - ¼ród³a ³atek z g³ównego pakietu
@@ -83,7 +83,7 @@ Requires:	aumix
 %description autoconfig
 Script loading patches. Currently it cannot do too much.
 
-%description -l pl autoconfig
+%description autoconfig -l pl
 Skrypt ³aduj±cy ³atki. W chwili obecnej nie potrafi zbyt du¿o.
 
 %package epache
@@ -103,7 +103,15 @@ Requires:	%{name}
 - you can control 'CONTROL GPRS' of loaded patches (such as speed in
   flanger)
 - you can save sessions and load them later, session is a list of
-  patches currenlty loaded with values of controls
+  patches currenlty loaded with values of controls.
+
+%description epcache -l pl
+- z pomoc± emu-dspmgra mo¿esz ³atwo ³adowaæ ³aty do karty na dan±
+  liniê (³ata musi byæ wygenerowana przez asembler as10k1) oraz
+  wyczy¶ciæ z niej kartê,
+- mo¿esz kontrolowaæ 'CONTROL GRPS' za³adowanych ³at,
+- mo¿esz zachowywaæ sesje i ³adowaæ je; sesja jest list± aktualnie
+  za³adowanych ³at z warto¶ciami kontrolnymi.
 
 %prep
 %setup -n emu-tools-%{version} -q -a 1
