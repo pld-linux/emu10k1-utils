@@ -1,0 +1,12 @@
+diff -ruN emu10k1-utilsdupa/fv10k1/Makefile emu10k1-utils/fv10k1/Makefile
+--- emu10k1-utilsdupa/fv10k1/Makefile	Fri Sep 28 03:56:20 2001
++++ emu10k1-utils/fv10k1/Makefile	Fri Jan  4 23:50:03 2002
+@@ -42,7 +42,7 @@
+ 
+ # implicit rule for assembling binaries
+ $(BINDIR)/%.bin: %.asm $(INCLUDES)
+-	as10k1 $<
++	../as10k1/as10k1 $<
+ 	mv $*.bin $(BINDIR)
+ 
+ # implicit rules for converting m4 to asm
