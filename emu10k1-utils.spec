@@ -3,7 +3,7 @@ Summary:	Utils controlling emu10k1 processor
 Summary(pl):	Narzêdzia kontroluj±ce procesor emu10k1
 Name:		emu10k1-utils
 Version:	0.9.4
-Release:	5
+Release:	6
 License:	GPL
 Group:		Applications/Sound
 Source0:	http://dl.sourceforge.net/emu10k1/emu-tools-%{version}.tar.gz
@@ -16,6 +16,7 @@ Patch0:		%{name}-path.patch
 Patch1:		%{name}-aumix.patch
 Patch2:		%{name}-fv10k1.patch
 Patch3:		%{name}-gcc33.patch
+Patch4:		%{name}-nokernel.patch
 URL:		http://sourceforge.net/projects/emu10k1/
 BuildRequires:	gtk+-devel
 BuildRequires:	libstdc++-devel
@@ -69,7 +70,7 @@ Pakiet zawiera:
 Summary:	emu10k1 autoconfiguration on module load
 Summary(pl):	Skrypt konfiguruj±cy emu10k1 przy ³adowaniu modu³u
 Group:		Applications/Sound
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 Requires:	aumix
 
 %description autoconfig
@@ -82,7 +83,7 @@ Skrypt ³aduj±cy ³atki. W chwili obecnej nie potrafi zbyt du¿o.
 Summary:	Program for configuring patches for emu10k1 based sound cards
 Summary(pl):	Program konfiguruj±cy ³atki dla kart opartych na emu10k1
 Group:		X11/Applications/Sound
-Requires:	%{name}
+Requires:	%{name} = %{version}-%{release}
 
 %description epache
 - with the help of emu-dspmgr you can easily load a patch to the card
@@ -107,6 +108,7 @@ Requires:	%{name}
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 cp %{SOURCE2} %{SOURCE3} .
 
