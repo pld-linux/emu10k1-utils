@@ -1,0 +1,19 @@
+diff -ruN emu10k1-utilsdupa/scripts/emu-script emu10k1-utils/scripts/emu-script
+--- emu10k1-utilsdupa/scripts/emu-script	Mon Oct  1 13:02:11 2001
++++ emu10k1-utils/scripts/emu-script	Fri Jan  4 22:20:52 2002
+@@ -213,11 +213,13 @@
+ 	restore | restart)
+                 load
+ 		# restore mixer settings
+-		/bin/aumix-minimal -f /etc/.aumixrc -L  >/dev/null 2>&1 || : 
++#		/bin/aumix-minimal -f /etc/.aumixrc -L  >/dev/null 2>&1 || : 
++		echo "Use /etc/rc.d/init.d/aumix start"
+                 ;;
+         save | stop)
+ 		# save mixer settings
+-		/bin/aumix-minimal -f /etc/.aumixrc -S   >/dev/null 2>&1 || :  
++#		/bin/aumix-minimal -f /etc/.aumixrc -S   >/dev/null 2>&1 || :  
++		echo "Use /etc/rc.d/init.d/aumix stop"
+ 		;;
+         *)
+ 		load
