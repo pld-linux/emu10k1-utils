@@ -6,10 +6,6 @@ Version:	0.9.4
 Release:	1
 License:	GPL
 Group:		Applications/Sound
-Group(de):	Applikationen/Laut
-Group(es):	Aplicaciones/Sonido
-Group(pl):	Aplikacje/D¼wiêk
-Group(pt_BR):	Aplicações/Som
 Source0:	http://prdownloads.sourceforge.net/emu10k1/emu-tools-%{version}.tar.gz
 Source1:	http://www.geocities.com/hsokolow2001/linux/epache-%{epache_version}.tgz
 Patch0:		%{name}-path.patch
@@ -54,10 +50,6 @@ emu-dspmgr.
 Summary:	emu10k1 programming utils.
 Summary(pl):	Narzêdzia do programowania emu10k1
 Group:		Applications/Sound
-Group(de):	Applikationen/Laut
-Group(es):	Aplicaciones/Sonido
-Group(pl):	Aplikacje/D¼wiêk
-Group(pt_BR):	Aplicações/Som
 
 %description devel
 Package contains:
@@ -73,10 +65,6 @@ Pakiet zawiera:
 Summary:	emu10k1 autoconfiguration on module load.
 Summary(pl):	Skrypt konfiguruj±cy emu10k1 przy ³adowaniu modu³u.
 Group:		Applications/Sound
-Group(de):	Applikationen/Laut
-Group(es):	Aplicaciones/Sonido
-Group(pl):	Aplikacje/D¼wiêk
-Group(pt_BR):	Aplicações/Som
 Requires:	%{name} = %{version}
 Requires:	aumix
 
@@ -90,10 +78,6 @@ Skrypt ³aduj±cy ³atki. W chwili obecnej nie potrafi zbyt du¿o.
 Summary:	Program for configuring patches for emu10k1 based sound cards
 Summary(pl):	Program konfiguruj±cy ³atki dla kart opartych na emu10k1
 Group:		Applications/Sound
-Group(de):	Applikationen/Laut
-Group(es):	Aplicaciones/Sonido
-Group(pl):	Aplikacje/D¼wiêk
-Group(pt_BR):	Aplicações/Som
 Requires:	%{name}
 
 %description epache
