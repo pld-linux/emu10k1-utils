@@ -110,7 +110,7 @@ cp %{SOURCE2} %{SOURCE3} .
 %build
 %{__make} CC="%{__cc}"
 %{__make} -C dbgemu CC="%{__cc}"
-#%{__make} -C fv10k1
+#%%{__make} -C fv10k1
 %{__make} -C epache-%{epache_version} CC="%{__cc}"
 
 %install
