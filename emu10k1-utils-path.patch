@@ -1,0 +1,47 @@
+diff -ruN emu10k1-utilsdupa/Makefile.config emu10k1-utils/Makefile.config
+--- emu10k1-utilsdupa/Makefile.config	Mon Aug 20 13:02:09 2001
++++ emu10k1-utils/Makefile.config	Fri Jan  4 22:19:35 2002
+@@ -1,9 +1,9 @@
+ 
+ #tools install defaults
+ 
+-prefix := ${DESTDIR}/usr/local
++prefix := ${DESTDIR}/usr
+ exec_prefix := $(prefix)
+ bindir := $(exec_prefix)/bin
+ data_dir := $(prefix)/share/emu10k1
+-man_prefix := $(exec_prefix)/man
+-script_dir := $(prefix)/etc
++man_prefix := $(exec_prefix)/share/man
++script_dir := ${DESTDIR}/etc
+diff -ruN emu10k1-utilsdupa/scripts/Makefile emu10k1-utils/scripts/Makefile
+--- emu10k1-utilsdupa/scripts/Makefile	Sun Aug 26 13:02:11 2001
++++ emu10k1-utils/scripts/Makefile	Fri Jan  4 22:13:40 2002
+@@ -8,5 +8,5 @@
+ else
+ 	@echo "configuration file already installed..."
+ endif
+-	install -m 755 emu-script $(script_dir)
++	install -m 755 emu-script $(bindir)
+ 
+diff -ruN emu10k1-utilsdupa/scripts/emu-script emu10k1-utils/scripts/emu-script
+--- emu10k1-utilsdupa/scripts/emu-script	Mon Oct  1 13:02:11 2001
++++ emu10k1-utils/scripts/emu-script	Fri Jan  4 22:18:46 2002
+@@ -35,7 +35,7 @@
+ 
+ 
+ # Default location of programs: 
+-BASE_PATH=/usr/local
++BASE_PATH=/usr
+ DSPPATH=$BASE_PATH/share/emu10k1
+ 
+ DSPMGR=$BASE_PATH/bin/emu-dspmgr
+@@ -46,7 +46,7 @@
+ load(){
+ 
+ # Source configurations
+-  . $BASE_PATH/etc/emu10k1.conf
++  . /etc/emu10k1.conf
+ #set some variables
+ if [ $USE_DIGITAL_OUTPUT = yes ]; then
+     FRONT="Digital"
