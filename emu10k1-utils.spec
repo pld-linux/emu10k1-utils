@@ -55,7 +55,6 @@ Group(de):	Applikationen/Laut
 Group(es):	Aplicaciones/Sonido
 Group(pl):	Aplikacje/D¼wiêk
 Group(pt_BR):	Aplicações/Som
-Requires:	%{name} = %{version}
 
 %description devel
 Package contains:
