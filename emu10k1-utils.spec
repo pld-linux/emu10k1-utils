@@ -1,22 +1,25 @@
-%define snap	20020101
+%define epache_version	0.1.4
 Summary:	Utils controlling emu10k1 processor
 Summary(pl):	Narzêdzia kontroluj±ce procesor emu10k1
 Name:		emu10k1-utils
-Version:	0.9.3
-Release:	0.%{snap}.1
+Version:	0.9.4
+Release:	1
 License:	GPL
 Group:		Applications/Sound
 Group(de):	Applikationen/Laut
 Group(es):	Aplicaciones/Sonido
 Group(pl):	Aplikacje/D¼wiêk
 Group(pt_BR):	Aplicações/Som
-Source0:	%{name}-%{snap}.tar.bz2
+Source0:	http://prdownloads.sourceforge.net/emu10k1/emu-tools-%{version}.tar.gz
+Source1:	http://www.geocities.com/hsokolow2001/linux/epache-%{epache_version}.tgz
 Patch0:		%{name}-path.patch
 Patch1:		%{name}-aumix.patch
 Patch2:		%{name}-fv10k1.patch
-URL:		http://opensource.creative.com/
-# czy w j±drach 2.2 jest obs³uga emu10k1? jak nie, to dodaæ requires: kernel >=2.4
+URL:		http://sourceforge.net/projects/emu10k1
+Conflicts:	kernel < 2.4.11
+Conflicts:	alsa-driver
 BuildRequires:	m4
+BuildRequires:	gtk+-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_prefix		/usr
@@ -83,22 +86,43 @@ Script loading patches. Currently it cannot do too much.
 %description -l pl autoconfig
 Skrypt ³aduj±cy ³atki. W chwili obecnej nie potrafi zbyt du¿o.
 
+%package epache
+Summary:	Program for configuring patches for emu10k1 based sound cards
+Summary(pl):	Program konfiguruj±cy ³atki dla kart opartych na emu10k1
+Group:		Applications/Sound
+Group(de):	Applikationen/Laut
+Group(es):	Aplicaciones/Sonido
+Group(pl):	Aplikacje/D¼wiêk
+Group(pt_BR):	Aplicações/Som
+Requires:	%{name}
+
+%description epache
+- with the help of emu-dspmgr you can easily load a patch to the card
+  on the specified line (the patch must be generated with the as10k1
+  assembler) and clean the card from it.
+- you can control 'CONTROL GPRS' of loaded patches (such as speed in
+  flanger)
+- you can save sessions and load them later, session is a list of
+  patches currenlty loaded with values of controls
+
 %prep
-%setup -n emu10k1-utils -q
+%setup -n emu-tools-%{version} -q -a 1
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
 
 %build
 %{__make}
-#%{__make} -C compiler
-#%{__make} -C dbgemu
+%{__make} -C dbgemu
 %{__make} -C fv10k1
+%{__make} -C epache-%{epache_version}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
 %{__make} DESTDIR=$RPM_BUILD_ROOT install
+install -d $RPM_BUILD_ROOT%{_prefix}/X11R6/bin
+cp epache-%{epache_version}/epache $RPM_BUILD_ROOT%{_prefix}/X11R6/bin/
 cp fv10k1/load.sh fv10k1/unload.sh fv10k1/fv10k1control.pl $RPM_BUILD_ROOT%{_bindir}
 mv fv10k1/README docs/README.fv10k1
 cp fv10k1/bin/* $RPM_BUILD_ROOT%{_datadir}/emu10k1/
@@ -111,6 +135,7 @@ gzip -9nf $RPM_BUILD_ROOT%{_datadir}/emu10k1/asm/*
 
 gzip -9nf $RPM_BUILD_ROOT%{_datadir}/emu10k1/README
 gzip -9nf docs/*
+gzip -9nf epache-%{epache_version}/README
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -134,7 +159,7 @@ mv /etc/modules.conf.new /etc/modules.conf
 %attr(750,root,root) %{_bindir}/fv10k1control.pl
 %attr(750,root,root) %{_bindir}/load.sh
 %attr(750,root,root) %{_bindir}/unload.sh
-%doc docs/README-TOOLS.gz docs/README.fv10k1.gz
+%doc docs/CHANGES.gz docs/README.gz docs/README.FAQ.gz
 %{_mandir}/man1/emu-*
 %dir %{_datadir}/emu10k1
 %{_datadir}/emu10k1/*.bin
@@ -143,7 +168,7 @@ mv /etc/modules.conf.new /etc/modules.conf
 %files devel
 %defattr(644,root,root,755)
 %attr(750,root,root) %{_bindir}/as10k1
-%doc docs/dsp.txt.gz docs/manuals.txt.gz docs/registers.txt.gz docs/tram.txt.gz
+%doc docs/dsp.txt.gz docs/manuals.txt.gz docs/multichannel.txt.gz docs/TODO.gz
 %{_mandir}/man1/as10k1*
 %dir %{_datadir}/emu10k1/asm
 %{_datadir}/emu10k1/asm/*
@@ -152,3 +177,8 @@ mv /etc/modules.conf.new /etc/modules.conf
 %defattr(644,root,root,755)
 %attr(750,root,root) %{_bindir}/emu-script
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/emu10k1.conf
+
+%files epache
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_prefix}/X11R6/bin/epache
+%doc epache-%{epache_version}/README.gz
