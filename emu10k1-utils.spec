@@ -21,6 +21,7 @@ URL:		http://sourceforge.net/projects/emu10k1/
 BuildRequires:	gtk+-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	m4
+BuildRequires:	perl-base
 Conflicts:	alsa-driver
 Conflicts:	kernel < 2.4.11
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
