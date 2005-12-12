@@ -41,14 +41,16 @@ installed. You can load these patches using emu-dspmgr.
 %description -l pl
 emu10k1 jest w rzeczywisto¶ci procesorem sygna³ów cyfrowych (dsp). Nie
 robi ¿adnych efektów sam z siebie, ani nie kieruje d¼wiêku z wej¶cia
-na wyj¶cie. Odpowiedzialny za to kod dsp musi byæ napisany i za³adowany. 
-emu10k1-utils pozwala ustawiæ routing, (za/wy)³adowaæ ³atki (efekty), 
-kontrolowaæ ich parametry (np. przez odzwierciedlenie w mikserze).
+na wyj¶cie. Odpowiedzialny za to kod dsp musi byæ napisany i
+za³adowany. emu10k1-utils pozwala ustawiæ routing, (za/wy)³adowaæ
+³atki (efekty), kontrolowaæ ich parametry (np. przez odzwierciedlenie
+w mikserze).
 
-Ten pakiet zawiera emu-dspmgr, narzêdzie obs³uguj±ce system zarz±dzania 
-³atkami dsp karty i emu-config, konfigurator kart d¼wiêkowych opartych 
-na emu10k1. Zainstalowane zostanie równie¿ kilka gotowych, skompilowanych 
-³atek, które mo¿na za³adowaæ u¿ywaj±c emu-dspmgr.
+Ten pakiet zawiera emu-dspmgr, narzêdzie obs³uguj±ce system
+zarz±dzania ³atkami dsp karty i emu-config, konfigurator kart
+d¼wiêkowych opartych na emu10k1. Zainstalowane zostanie równie¿ kilka
+gotowych, skompilowanych ³atek, które mo¿na za³adowaæ u¿ywaj±c
+emu-dspmgr.
 
 %package devel
 Summary:	emu10k1 programming utils
@@ -180,7 +182,7 @@ mv -f /etc/modprobe.conf.new /etc/modprobe.conf
 %files autoconfig
 %defattr(644,root,root,755)
 %attr(754,root,root) %{_bindir}/emu-script
-%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/emu10k1.conf
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/emu10k1.conf
 
 %files epache
 %defattr(644,root,root,755)
