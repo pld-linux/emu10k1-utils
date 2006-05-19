@@ -3,7 +3,7 @@ Summary:	Utils controlling emu10k1 processor
 Summary(pl):	Narzêdzia kontroluj±ce procesor emu10k1
 Name:		emu10k1-utils
 Version:	0.9.4
-Release:	6
+Release:	7
 License:	GPL
 Group:		Applications/Sound
 Source0:	http://dl.sourceforge.net/emu10k1/emu-tools-%{version}.tar.gz
@@ -71,8 +71,10 @@ Pakiet zawiera:
 Summary:	emu10k1 autoconfiguration on module load
 Summary(pl):	Skrypt konfiguruj±cy emu10k1 przy ³adowaniu modu³u
 Group:		Applications/Sound
+Requires(triggerpostun):	sed >= 4.0
 Requires:	%{name} = %{version}-%{release}
 Requires:	aumix
+Requires:	module-init-tools >= 3.2.2-2
 
 %description autoconfig
 Script loading patches. Currently it cannot do too much.
@@ -145,21 +147,16 @@ install as10k1/effects/*.inc $RPM_BUILD_ROOT%{_datadir}/emu10k1/asm
 
 gzip -9nf $RPM_BUILD_ROOT%{_datadir}/emu10k1/asm/*
 gzip -9nf $RPM_BUILD_ROOT%{_datadir}/emu10k1/README
+install -d $RPM_BUILD_ROOT/etc/modprobe.d
+cat <<'EOF' > $RPM_BUILD_ROOT/etc/modprobe.d/%{name}.conf
+install emu10k1 /sbin/modprobe --ignore-install emu10k1 && { /usr/bin/emu-script; }
+EOF
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post	autoconfig
-umask 027
-grep "install emu10k1 /sbin/modprobe --ignore-install emu10k1 && { /usr/bin/emu-script; }" /etc/modprobe.conf > /dev/null
-if [ "$?" -eq "1" ]; then
-	echo "install emu10k1 /sbin/modprobe --ignore-install emu10k1 && { /usr/bin/emu-script; }" >> /etc/modprobe.conf
-fi
-
-%postun	autoconfig
-umask 027
-grep -v "install emu10k1 /sbin/modprobe --ignore-install emu10k1 && { /usr/bin/emu-script; }" /etc/modprobe.conf > /etc/modprobe.conf.new
-mv -f /etc/modprobe.conf.new /etc/modprobe.conf
+%triggerpostun autoconfig -- emu10k1-utils-autoconfig < 0.9.4-6.1
+%{__sed} -i -e '/install emu10k1 /d' /etc/modprobe.conf
 
 %files
 %defattr(644,root,root,755)
@@ -182,6 +179,7 @@ mv -f /etc/modprobe.conf.new /etc/modprobe.conf
 %files autoconfig
 %defattr(644,root,root,755)
 %attr(754,root,root) %{_bindir}/emu-script
+%config(noreplace) %verify(not md5 mtime size) /etc/modprobe.d/%{name}.conf
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/emu10k1.conf
 
 %files epache
