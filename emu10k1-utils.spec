@@ -1,6 +1,6 @@
 %define epache_version	0.1.4
 Summary:	Utils controlling emu10k1 processor
-Summary(pl.UTF-8):   Narzędzia kontrolujące procesor emu10k1
+Summary(pl.UTF-8):	Narzędzia kontrolujące procesor emu10k1
 Name:		emu10k1-utils
 Version:	0.9.4
 Release:	7
@@ -54,7 +54,7 @@ emu-dspmgr.
 
 %package devel
 Summary:	emu10k1 programming utils
-Summary(pl.UTF-8):   Narzędzia do programowania emu10k1
+Summary(pl.UTF-8):	Narzędzia do programowania emu10k1
 Group:		Applications/Sound
 
 %description devel
@@ -69,7 +69,7 @@ Pakiet zawiera:
 
 %package autoconfig
 Summary:	emu10k1 autoconfiguration on module load
-Summary(pl.UTF-8):   Skrypt konfigurujący emu10k1 przy ładowaniu modułu
+Summary(pl.UTF-8):	Skrypt konfigurujący emu10k1 przy ładowaniu modułu
 Group:		Applications/Sound
 Requires(triggerpostun):	sed >= 4.0
 Requires:	%{name} = %{version}-%{release}
@@ -84,7 +84,7 @@ Skrypt ładujący łatki. W chwili obecnej nie potrafi zbyt dużo.
 
 %package epache
 Summary:	Program for configuring patches for emu10k1 based sound cards
-Summary(pl.UTF-8):   Program konfigurujący łatki dla kart opartych na emu10k1
+Summary(pl.UTF-8):	Program konfigurujący łatki dla kart opartych na emu10k1
 Group:		X11/Applications/Sound
 Requires:	%{name} = %{version}-%{release}
 
