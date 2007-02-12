@@ -1,6 +1,6 @@
 %define epache_version	0.1.4
 Summary:	Utils controlling emu10k1 processor
-Summary(pl):	Narzêdzia kontroluj±ce procesor emu10k1
+Summary(pl.UTF-8):   NarzÄ™dzia kontrolujÄ…ce procesor emu10k1
 Name:		emu10k1-utils
 Version:	0.9.4
 Release:	7
@@ -38,23 +38,23 @@ patch management system and emu-config, a configuration tool for
 emu10k1 based sound cards. Also, several ".bin" dsp patches will be
 installed. You can load these patches using emu-dspmgr.
 
-%description -l pl
-emu10k1 jest w rzeczywisto¶ci procesorem sygna³ów cyfrowych (dsp). Nie
-robi ¿adnych efektów sam z siebie, ani nie kieruje d¼wiêku z wej¶cia
-na wyj¶cie. Odpowiedzialny za to kod dsp musi byæ napisany i
-za³adowany. emu10k1-utils pozwala ustawiæ routing, (za/wy)³adowaæ
-³atki (efekty), kontrolowaæ ich parametry (np. przez odzwierciedlenie
+%description -l pl.UTF-8
+emu10k1 jest w rzeczywistoÅ›ci procesorem sygnaÅ‚Ã³w cyfrowych (dsp). Nie
+robi Å¼adnych efektÃ³w sam z siebie, ani nie kieruje dÅºwiÄ™ku z wejÅ›cia
+na wyjÅ›cie. Odpowiedzialny za to kod dsp musi byÄ‡ napisany i
+zaÅ‚adowany. emu10k1-utils pozwala ustawiÄ‡ routing, (za/wy)Å‚adowaÄ‡
+Å‚atki (efekty), kontrolowaÄ‡ ich parametry (np. przez odzwierciedlenie
 w mikserze).
 
-Ten pakiet zawiera emu-dspmgr, narzêdzie obs³uguj±ce system
-zarz±dzania ³atkami dsp karty i emu-config, konfigurator kart
-d¼wiêkowych opartych na emu10k1. Zainstalowane zostanie równie¿ kilka
-gotowych, skompilowanych ³atek, które mo¿na za³adowaæ u¿ywaj±c
+Ten pakiet zawiera emu-dspmgr, narzÄ™dzie obsÅ‚ugujÄ…ce system
+zarzÄ…dzania Å‚atkami dsp karty i emu-config, konfigurator kart
+dÅºwiÄ™kowych opartych na emu10k1. Zainstalowane zostanie rÃ³wnieÅ¼ kilka
+gotowych, skompilowanych Å‚atek, ktÃ³re moÅ¼na zaÅ‚adowaÄ‡ uÅ¼ywajÄ…c
 emu-dspmgr.
 
 %package devel
 Summary:	emu10k1 programming utils
-Summary(pl):	Narzêdzia do programowania emu10k1
+Summary(pl.UTF-8):   NarzÄ™dzia do programowania emu10k1
 Group:		Applications/Sound
 
 %description devel
@@ -62,14 +62,14 @@ Package contains:
 - as10k1 - Assembler for the emu10k1 DSP Processor
 - patches sources
 
-%description devel -l pl
+%description devel -l pl.UTF-8
 Pakiet zawiera:
 - as10k1 - asembler dla procesora emu10k1
-- ¼ród³a ³atek z g³ównego pakietu
+- ÅºrÃ³dÅ‚a Å‚atek z gÅ‚Ã³wnego pakietu
 
 %package autoconfig
 Summary:	emu10k1 autoconfiguration on module load
-Summary(pl):	Skrypt konfiguruj±cy emu10k1 przy ³adowaniu modu³u
+Summary(pl.UTF-8):   Skrypt konfigurujÄ…cy emu10k1 przy Å‚adowaniu moduÅ‚u
 Group:		Applications/Sound
 Requires(triggerpostun):	sed >= 4.0
 Requires:	%{name} = %{version}-%{release}
@@ -79,12 +79,12 @@ Requires:	module-init-tools >= 3.2.2-2
 %description autoconfig
 Script loading patches. Currently it cannot do too much.
 
-%description autoconfig -l pl
-Skrypt ³aduj±cy ³atki. W chwili obecnej nie potrafi zbyt du¿o.
+%description autoconfig -l pl.UTF-8
+Skrypt Å‚adujÄ…cy Å‚atki. W chwili obecnej nie potrafi zbyt duÅ¼o.
 
 %package epache
 Summary:	Program for configuring patches for emu10k1 based sound cards
-Summary(pl):	Program konfiguruj±cy ³atki dla kart opartych na emu10k1
+Summary(pl.UTF-8):   Program konfigurujÄ…cy Å‚atki dla kart opartych na emu10k1
 Group:		X11/Applications/Sound
 Requires:	%{name} = %{version}-%{release}
 
@@ -97,13 +97,13 @@ Requires:	%{name} = %{version}-%{release}
 - you can save sessions and load them later, session is a list of
   patches currenlty loaded with values of controls.
 
-%description epache -l pl
-- z pomoc± emu-dspmgra mo¿esz ³atwo ³adowaæ ³aty do karty na dan±
-  liniê (³ata musi byæ wygenerowana przez asembler as10k1) oraz
-  wyczy¶ciæ z niej kartê,
-- mo¿esz kontrolowaæ rejestry kontrolne za³adowanych ³at,
-- mo¿esz zachowywaæ sesje i ³adowaæ je; sesja jest list± aktualnie
-  za³adowanych ³at z warto¶ciami kontrolnymi.
+%description epache -l pl.UTF-8
+- z pomocÄ… emu-dspmgra moÅ¼esz Å‚atwo Å‚adowaÄ‡ Å‚aty do karty na danÄ…
+  liniÄ™ (Å‚ata musi byÄ‡ wygenerowana przez asembler as10k1) oraz
+  wyczyÅ›ciÄ‡ z niej kartÄ™,
+- moÅ¼esz kontrolowaÄ‡ rejestry kontrolne zaÅ‚adowanych Å‚at,
+- moÅ¼esz zachowywaÄ‡ sesje i Å‚adowaÄ‡ je; sesja jest listÄ… aktualnie
+  zaÅ‚adowanych Å‚at z wartoÅ›ciami kontrolnymi.
 
 %prep
 %setup -n emu-tools-%{version} -q -a1
