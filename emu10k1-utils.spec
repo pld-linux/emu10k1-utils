@@ -11,7 +11,9 @@ Source0:	http://dl.sourceforge.net/emu10k1/emu-tools-%{version}.tar.gz
 Source1:	http://www.geocities.com/hsokolow2001/linux/epache-%{epache_version}.tgz
 # Source1-md5:	f85a9f71485a4f8667084010e7c18e6f
 Source2:	m2049.pdf
+# Source2-md5:	3219010e9fc7ad3057ca0ec42e49a348
 Source3:	hog63.ps
+# Source3-md5:	8c9db3153866417d51541e4cf1a6c2c4
 Patch0:		%{name}-path.patch
 Patch1:		%{name}-aumix.patch
 Patch2:		%{name}-fv10k1.patch
